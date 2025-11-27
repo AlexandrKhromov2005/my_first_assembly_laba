@@ -1,17 +1,24 @@
-build:
-	echo "Start building..."
-	nasm -f elf32 task1.asm -o task1.o
-	echo "task1.o is ready"
+ASM = nasm
+LD = ld
+ASMFLAGS = -f elf32
+LDFLAGS = -m elf_i386
 
-link: build
-	echo "Start linking..."
-	ld -m elf_i386 task1.o -o task1
-	echo "task1 is ready"
+TARGET = task1
+ASM_SRC = task1.asm
+ASM_OBJ = task1.o
 
-run: link
-	echo "Start running..."
-	echo "task1 has finished running with code: $$?" 
+all: $(TARGET)
+
+$(ASM_OBJ): $(ASM_SRC)
+	$(ASM) $(ASMFLAGS) $(ASM_SRC) -o $(ASM_OBJ)
+
+$(TARGET): $(ASM_OBJ)
+	$(LD) $(LDFLAGS) $(ASM_OBJ) -o $(TARGET)
+
+run: $(TARGET)
+	./$(TARGET)
 
 clean:
-	rm -f task1 task1.o
-	echo "Cleaning is finished!"
+	rm -f $(TARGET) $(ASM_OBJ)
+
+.PHONY: all run clean
