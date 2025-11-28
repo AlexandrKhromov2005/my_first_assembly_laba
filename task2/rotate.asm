@@ -1,11 +1,3 @@
-; Поворот матрицы на 90 градусов по часовой стрелке
-; result[i][j] = source[size-1-j][i]
-;
-; Параметры:
-;   [ebp+8]  - matrix
-;   [ebp+12] - temp
-;   [ebp+16] - size
-
 section .text
     global rotate_matrix
 
